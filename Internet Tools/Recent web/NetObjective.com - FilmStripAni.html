@@ -1,0 +1,279 @@
+<html>
+<head>
+   <title>NetObjective.com - FilmStripAni Information Page</title>
+</head>
+<body background="http://www.netobjective.com/netobjective/images/background.gif"
+      link="#9d0010" text="#750040" vlink="#000000">
+
+    <center>
+        <img src="http://www.netobjective.com/netobjective/images/logo_trans.gif"
+            alt="NetObjective Logo" width=540 height=170>
+
+        <h1>FilmStripAni Animation Applet v1.0</h1>
+    </center>
+    <br>
+
+    <p>
+    The purpose of this applet is to take a "Film Strip" (both vertical and
+    horizontal layouts) type image and give it animation like a film projector.
+    The animation can be stopped and re-started at any time by clicking on the
+    applet/image.
+    </p>
+
+    <p>
+    The animation is completely configurable. All of the valid parameters are
+    described within this document.
+    </p>
+
+    <p>
+    The image is double buffered for fluidity.  I have noticed, on occasion, when
+    the applet size is larger that the frame size, a remnant of the parts of the
+    image that are clipped and are not in view appear during scrolling, but
+    immediately go away when the next thread catches up or when the thread is
+    re-started.  I have looked into this and I am not sure what is causing this
+    and whether or not there is anything that I can do about it.  One definite
+    way to avoid this is to turn on Debugging and find the exact frame size, and
+    then reduce your applet size to the frame size.
+    </p>
+
+    <p>
+    To add this applet to your page, simply add the following Java applet
+    tag to your HTML code, and modify the parameter values to meet your own
+    individual needs. Since a Java applet is just another program running
+    on your computer, it has the ability to take input from a user. This program
+    gets its input from parameters sent to it from the HTML tag. All parameters
+    are optional except for the <tt>HEIGHT</tt> and <tt>WIDTH</tt> which are
+    a part of all Java <tt>APPLET</tt> tags. The different parameters will be
+    described below.
+    </p>
+
+    <p>
+    This following sample HTML code is typical of the parameters needed to get an
+    image animated.  Again, the applet can be configured to meet the needs of your
+    particular image.
+    </p>
+
+    <pre>
+        &lt;applet code=&quot;FilmStripAni&quot;
+            codebase=&quot;http://www.netobjective.com/java/classes&quot;
+            width=100 height=400&gt
+                &lt;param name="IMAGE" value="putt.jpg"&gt
+                &lt;param name="BORDERCOLOR" value="ffffff"&gt
+                &lt;param name="FRAMES" value="21"&gt
+                &lt;param name="FRAMEGAP" value="3"&gt
+                &lt;param name="FRAMESPEED" value="200"&gt
+        &lt;/applet&gt;
+    </pre>
+
+    The values of the <tt>HEIGHT</tt> and <tt>WIDTH</tt> values can be adjusted
+    accordingly.  If the applets dimensions are larger than the size of a frame,
+    the space around the frame will be filled in with the color passed to the
+    BORDERCOLOR parameter (or white by default).  The above tag will provide the
+    following applet:
+
+    <br>
+    <center>
+        <h5>(Click on the applet Stop and Re-Start it.)</h5>
+
+        <table border=2 cellpadding=2>
+            <td align=absmiddle>
+                <applet code="FilmStripAni"
+		            codebase="http://www.netobjective.com/java/classes"
+                    height=100 width=400>
+                    <param name="IMAGE" value="putt.jpg">
+                    <param name="BORDERCOLOR" value="ffffff">
+                    <param name="FRAMES" value="21">
+                    <param name="FRAMEGAP" value="3">
+                    <param name="FRAMESPEED" value="200">
+                </applet><br>
+	        </td>
+        </table>
+
+        <h5><a href="putt.jpg">Click me to see the Full Image.</a></h5>
+        <h5>Created by <a href="http://www.netobjective.com/dndesign">
+            DNDesign</a>.</h5>
+    </center>
+
+    <hr width=95% align=center size=4>
+
+    <p>Parameters are passed to Java by using the <tt>PARAM</tt> tag and the
+    parameter name and corresponding value. The <tt>PARAM</tt> tag needs to
+    be in between the beginning <tt>&lt;APPLET&gt;</tt> and ending
+    <tt>&lt;/APPLET&gt;</tt> tags. This applet can be customized by using the
+    following optional parameters:
+    </p>
+
+    <br>
+    <h3>Image (Image Information) Parameters:</h3>
+    <ul>
+        <li><b>IMAGE</b>
+            The Name of the image that is to be animated.  The image can be any of
+            the typical WWW image formats.  I have tried and tested an image in
+            both JPEG and GIF formats.
+
+            The image is being loaded via the Media Tracker and therefore, you will
+            be notified of its progress. If there is a loading error, a message
+            will appear, but you will have to reference the Java Console for any
+            additional information.
+            <br><br>
+            <ul>
+		        <li>DEFAULT: &quot;image.jpg&quot</li><br>
+		        <li>EXAMPLE: &lt;param name=&quot;IMAGE&quot;
+		            value=&quot;sprockets.gif&quot;&gt;</li><br>
+            </ul>
+            <br>
+
+        <li><b>VERTICAL</b>
+            Is the image layout Vertically (top to bottom)?  The default layout
+            is HORIZONTAL (left to right). If you want to aimation to happen in
+            reverse, invert the image.
+            <br><br>
+            <ul>
+		        <li>DEFAULT: HORIZONTAL</li><br>
+		        <li>EXAMPLE: &lt;param name=&quot;VERTICAL&quot;
+		            value=&quot;&quot;&gt;</li><br>
+            </ul>
+            <br>
+    </ul>
+
+    <br>
+    <h3>Frame (Information about each of the Frames) Parameters:</h3>
+    <ul>
+        <li><b>FRAMES</b>
+            The total number of individual frames in the image.  In most cases,
+            the more frames the better, but like most of you, I am no artist.
+            <br><br>
+            <ul>
+		        <li>DEFAULT: &quot;10&quot</li><br>
+		        <li>EXAMPLE: &lt;param name=&quot;FRAMES&quot;
+		            value=&quot;4&quot;&gt;</li><br>
+            </ul>
+            <br>
+
+        <li><b>FRAMEGAP</b>
+            The space, if any, between the frames.  If you notice that the image
+            moves to the left during animation, chances are pretty good that there
+            is a small gap between the frames.
+            <br><br>
+            <ul>
+		        <li>DEFAULT: &quot;0&quot</li><br>
+		        <li>EXAMPLE: &lt;param name=&quot;FRAMEGAP&quot;
+		            value=&quot;0&quot;&gt;</li><br>
+            </ul>
+            <br>
+
+        <li><b>FRAMESPEED</b>
+            The Speed at which the Animation thread refreshes itself.  Some
+            animations look better faster.  It can hide that fact that the image
+            does not contain a lot of detail.
+            <br><br>
+            <ul>
+		        <li>DEFAULT: &quot;500&quot</li><br>
+		        <li>EXAMPLE: &lt;param name=&quot;FRAMESPEED&quot;
+		            value=&quot;image_name.gif&quot;&gt;</li><br>
+            </ul>
+            <br>
+    </ul>
+
+    <br>
+    <h3>Other (Non-Frame, Animation or Image Related) Parameters:</h3>
+    <ul>
+	    <li><b>BORDERCOLOR</b><br>
+	        If the applet size is larger than the frame size, you can pass a
+	        hexadecimal color and all of the space around the frame will be
+	        filled with the color.  It may difficult to look at an image and
+	        determine the frame size (pass the DEBUG flag to get the exact
+	        frame size) for a perfect fit.  So, a border color can be used to
+	        replace the applet default background of grey.
+	        <br><br>
+	        <ul>
+		        <li>DEFAULT: &quot;white&quot or &quot;ffffff;&quot</li><br>
+		        <li>EXAMPLE: &lt;param name=&quot;BORDERCOLOR&quot;
+		            value=&quot;ffff00;&quot;&gt;</li><br>
+	        </ul>
+	        <br>
+
+	    <li><b>DEBUG</b><br>
+	        If the DEBUG parameter is passed, irregardless of the value, debugging
+	        output will be sent to the Java Console.
+	        <br><br>
+	        <ul>
+		        <li>DEFAULT: off</li><br>
+		        <li>EXAMPLE: &lt;param name=&quot;DEBUG&quot;
+		            value=&quot;&quot;&gt;</li><br>
+	        </ul>
+    </ul>
+
+    <hr width=95% align=center size=4>
+
+    <br>
+    Using the EXAMPLES shown above we yield the following HTML:
+    <pre>
+        &lt;applet code="FilmStripAni"
+		    codebase="http://www.netobjective.com/java/classes"
+		    height=100 width=100&gt
+            &lt;param name="IMAGE" value="sprockets.gif"&gt
+            &lt;param name="VERTICAL" value=""&gt
+            &lt;param name="BORDERCOLOR" value="ffff00"&gt
+            &lt;param name="FRAMES" value="4"&gt
+            &lt;param name="FRAMEGAP" value="0"&gt
+            &lt;param name="FRAMESPEED" value="200"&gt
+        &lt;/applet;&gt
+    </pre>
+
+
+    <br>
+    Implementing the above listed applet tags (from all of the EXAMPLES), with
+    a table placed around it for flash and dazzle, produces the following:
+
+    <br>
+    <center>
+        <h5>(Click on the applet Stop and Re-Start it.)</h5>
+
+        <table border=3 cellspacing=0 cellpadding=0>
+            <td>
+                <applet code="FilmStripAni"
+		            codebase="http://www.netobjective.com/java/classes"
+		            height=100 width=100>
+                    <param name="IMAGE" value="sprockets.gif">
+                    <param name="VERTICAL" value="">
+                    <param name="BORDERCOLOR" value="ffff00">
+                    <param name="FRAMES" value="4">
+                    <param name="FRAMEGAP" value="0">
+                    <param name="FRAMESPEED" value="200">
+                </applet><br>
+            </td>
+        </table>
+
+        <h5><a href="sprockets.gif">Click me to see the Full Image.</a></h5>
+    </center>
+
+    <hr width=95% align=center size=4>
+
+    <h2>To Do List</h2>
+
+    <ul>
+	<li>So far, nothing.  I need feedback!</li>
+    </ul>
+
+    <br>
+    <p>Please send any and all comments, suggestions, or questions to
+        <a HREF="mailto:wjdavis@netobjective.com">FilmStripAni Info/Help</a>
+    <br>
+
+    <hr width=95% align=center size=4>
+
+    <br>
+    Number of Accesses:
+	<img src="http://www.netobjective.com/cgi-bin/odometer?FilmStripAni"
+	    align=absmiddle>
+
+    <br>
+    Back to <a HREF="http://www.netobjective.com/">NetObjective's</a> Home Page
+    <br>
+    Back to <a HREF="http://www.netobjective.com/java">NetObjective's Java</a> Page
+    <br>Copyright 1996 NetObjective
+    </p>
+
+</body>
+</html>

@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Digital Earth - BCIT Project</title>
+    <style>
+        body {
+            background: #000000;
+            color: #ffffff;
+            font-family: 'Courier New', monospace;
+            margin: 0;
+            padding: 20px;
+            background-image: url('kbg.gif'); /* Original referenced a background */
+            background-attachment: fixed;
+        }
+        
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 20% 80%, rgba(255, 255, 204, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(255, 102, 0, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 40% 40%, rgba(255, 255, 255, 0.05) 0%, transparent 50%);
+            z-index: -1;
+        }
+        
+        a:link { color: #ffffcc; }
+        a:visited { color: #000000; }
+        a:active { color: #ff6600; }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+        }
+        
+        .main-image {
+            margin: 20px 0;
+            border: 2px solid rgba(255, 255, 204, 0.3);
+            background: linear-gradient(45deg, #001122, #002244);
+            padding: 20px;
+            border-radius: 10px;
+        }
+        
+        .ascii-nav {
+            font-family: 'Courier New', monospace;
+            font-size: 12px;
+            line-height: 1.2;
+            background: rgba(0, 0, 0, 0.7);
+            padding: 20px;
+            border: 1px solid #333;
+            margin: 20px 0;
+            border-radius: 5px;
+            overflow-x: auto;
+        }
+        
+        .ascii-nav a {
+            text-decoration: none;
+            color: #ffffcc;
+        }
+        
+        .ascii-nav a:hover {
+            background: rgba(255, 255, 204, 0.2);
+        }
+        
+        .content-text {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 30px;
+            border-radius: 10px;
+            margin: 20px 0;
+            text-align: left;
+            line-height: 1.6;
+        }
+        
+        .project-info {
+            background: rgba(255, 102, 0, 0.1);
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+        
+        .credits {
+            background: rgba(255, 255, 204, 0.1);
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            font-size: 14px;
+        }
+        
+        .image-placeholder {
+            width: 236px;
+            height: 201px;
+            background: linear-gradient(45deg, #002244, #004488);
+            border: 2px solid #ffffcc;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            border-radius: 10px;
+            color: #ffffcc;
+            font-style: italic;
+        }
+        
+        .gemini-image {
+            width: 315px;
+            height: 331px;
+            background: linear-gradient(135deg, #001133, #003366);
+            border: 2px solid #ffffcc;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            border-radius: 10px;
+            color: #ffffcc;
+            font-style: italic;
+        }
+        
+        .back-link {
+            margin-top: 40px;
+            padding: 20px;
+        }
+        
+        .back-link img {
+            border-radius: 10px;
+            border: 2px solid #ffffcc;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="main-image">
+            <div class="image-placeholder">
+                [Animated Image - s+p.gif]
+                <br>Digital Earth Logo
+            </div>
+        </div>
+        
+        <div class="gemini-image">
+            Gemini, the Twins
+            <br>[k2.gif]
+        </div>
+        
+        <div class="ascii-nav">
+            <pre>       <a href="a.html">.</a> <a href="a.html">.</a> <a href="a.html">.</a> <a href="a.html">.</a> <a href="a.html">.</a> <a href="a.html">.</a> <a href="a.html">.</a> <a href="a.html">.</a> <a href="a.html">.</a> <a href="a.html">.</a>
+     '<a href="o.html">/</a>'<a href="g.html">|</a> <a href="o.html">/</a>'<a href="g.html">|</a> <a href="o.html">/</a>'<a href="g.html">|</a> <a href="o.html">/</a>'<a href="g.html">|</a> <a href="o.html">/</a>'<a href="g.html">|</a> <a href="o.html">/</a>'<a href="u.html">!</a> <a href="m.html">:</a>'<a href="q.html">~</a>'<a href="i.html">-</a> <a href="i.html">-</a>'<a href="q.html">~</a> <a href="y.html">`</a>'<a href="u.html">!</a>'<a href="a.html">.</a>
+   '<a href="y.html">`</a> <a href="g.html">|</a> <a href="o.html">/</a> <a href="w.html">,</a> <a href="g.html">|</a> <a href="o.html">/</a> <a href="w.html">,</a> <a href="g.html">|</a> <a href="o.html">/</a> <a href="w.html">,</a> <a href="g.html">|</a> <a href="o.html">/</a> <a href="w.html">,</a> <a href="g.html">|</a> <a href="o.html">/</a> <a href="w.html">,</a> <a href="g.html">|</a> <a href="o.html">/</a> <a href="w.html">,</a> <a href="g.html">|</a> <a href="o.html">/</a> <a href="w.html">,</a> <a href="g.html">|</a> <a href="m.html">:</a> <a href="k.html">=</a> <a href="s.html">*</a> <a href="q.html">~</a> <a href="s.html">*</a> <a href="q.html">~</a> <a href="s.html">*</a> <a href="m.html">:</a> <a href="m.html">:</a> <a href="c.html">)</a>'
+  '<a href="q.html">~</a> <a href="u.html">!</a> <a href="q.html">~</a> <a href="k.html">=</a> <a href="q.html">~</a> <a href="k.html">=</a> <a href="q.html">~</a> <a href="k.html">=</a> <a href="q.html">~</a> <a href="k.html">=</a> <a href="q.html">~</a> <a href="k.html">=</a> <a href="q.html">~</a> <a href="k.html">=</a> <a href="q.html">~</a> <a href="k.html">=</a> <a href="q.html">~</a> <a href="k.html">=</a> <a href="q.html">~</a> <a href="k.html">=</a> <a href="q.html">~</a> <a href="k.html">=</a> <a href="q.html">~</a> <a href="g.html">|</a> <a href="g.html">|</a> <a href="k.html">=</a> <a href="u.html">!</a> <a href="g.html">|</a> <a href="o.html">/</a> <a href="w.html">,</a> <a href="g.html">|</a> <a href="o.html">/</a> <a href="w.html">,</a> <a href="g.html">|</a> <a href="c.html">)</a>'
+  '<a href="e.html">%</a> <a href="u.html">!</a> <a href="q.html">~</a> <a href="a.html">.</a> <a href="q.html">~</a> <a href="a.html">.</a> <a href="q.html">~</a> <a href="a.html">.</a> <a href="q.html">~</a> <a href="a.html">.</a> <a href="q.html">~</a> <a href="a.html">.</a> <a href="q.html">~</a> <a href="a.html">.</a> <a href="q.html">~</a> <a href="a.html">.</a> <a href="q.html">~</a> <a href="a.html">.</a> <a href="q.html">~</a> <a href="a.html">.</a> <a href="q.html">~</a> <a href="a.html">.</a> <a href="q.html">~</a> <a href="g.html">|</a> <a href="k.html">=</a> <a href="o.html">/</a> <a href="w.html">,</a> <a href="g.html">|</a> <a href="o.html">/</a> <a href="w.html">,</a> <a href="g.html">|</a> <a href="o.html">/</a> <a href="c.html">)</a>'
+  '<a href="q.html">~</a> <a href="u.html">!</a> <a href="a.html">.</a> <a href="y.html">`</a> <a href="a.html">.</a> <a href="y.html">`</a> <a href="a.html">.</a> <a href="y.html">`</a> <a href="a.html">.</a> <a href="y.html">`</a> <a href="a.html">.</a> <a href="y.html">`</a> <a href="a.html">.</a> <a href="y.html">`</a> <a href="a.html">.</a> <a href="y.html">`</a> <a href="a.html">.</a> <a href="y.html">`</a> <a href="a.html">.</a> <a href="y.html">`</a> <a href="a.html">.</a> <a href="y.html">`</a> <a href="a.html">.</a> <a href="y.html">`</a> <a href="g.html">|</a> <a href="k.html">=</a> <a href="g.html">|</a> <a href="q.html">~</a> <a href="g.html">|</a> <a href="g.html">|</a> <a href="m.html">:</a> <a href="q.html">~</a> <a href="s.html">*</a> <a href="q.html">~</a> <a href="c.html">)</a>'</pre>
+        </div>
+        
+        <div class="content-text">
+            <h2>Digital Earth</h2>
+            <p><strong>Digital earth makes the widening cultural promises of technology real by making visible the web that unites our diverse communities.</strong></p>
+            
+            <p>Digital earth is a response to the growing interest within the community concerning the possibilities of greater connectivity between peoples, issues, organizations, media, and the arts through the use of the new technologies.</p>
+            
+            <p>Digital earth's visionary objective is based on an appreciation of the patterns that connect, an ecological and evolutionary awareness of the joint venture that is communications, community, and culture.</p>
+            
+            <p>Developments in technology, in interactivity and in tele-communications allow us the venue of the virtual, a no-place, a utopia, that can sponsor the realm of our imagination. To become responsible for our imagination we must become sufficiently aware to support through opportunity and initiative the network of learning about our many cultural selves.</p>
+        </div>
+        
+        <div class="project-info">
+            <h3>Project URL</h3>
+            <p><a href="http://www.digearth.bcit.bc.ca/dedocs">www.digearth.bcit.bc.ca/dedocs</a></p>
+        </div>
+        
+        <div class="credits">
+            <h3>Contributors</h3>
+            <ul style="text-align: left; display: inline-block;">
+                <li>Terence Anthony</li>
+                <li>Lucinda Atwood</li>
+                <li>Oliver Hockenhull</li>
+                <li>Mike MacDonald</li>
+                <li>David Nandi Odhiambo</li>
+                <li>Thecla Schiphorst</li>
+                <li>Karen Thornton</li>
+                <li>Zainub Verjee</li>
+            </ul>
+        </div>
+        
+        <div class="credits">
+            <p><em>From "Desiredata" by K.D. Thornton -- Digital eARTh</em></p>
+            <p><strong>THE COUPLE</strong> - design by o. hockenhull & k.d.thornton</p>
+        </div>
+        
+        <div class="back-link">
+            <a href="eaaco.html">
+                <div style="width: 123px; height: 118px; background: linear-gradient(45deg, #002244, #004488); border: 2px solid #ffffcc; display: flex; align-items: center; justify-content: center; margin: 0 auto; border-radius: 10px; color: #ffffcc;">
+                    [Globe Image]<br>smglobe.gif
+                </div>
+                <br>Return to Earth
+            </a>
+        </div>
+    </div>
+</body>
+</html>
