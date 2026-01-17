@@ -30,9 +30,7 @@ const assets = [
 
 let vrmlScene;
 
-init();
-
-function init() {
+export function init(url, mode) {
     camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 1e10);
     camera.position.set(- 10, 5, 10);
     scene = new THREE.Scene();
@@ -44,7 +42,11 @@ function init() {
     dirLight.position.set(200, 200, 200);
     scene.add(dirLight);
     
-    loadAsset2("nettle.wrl");
+    if (mode == 0) {
+        loadAsset0(url);
+    } else {
+        loadAsset1(url);
+    }
     
     // renderer
     renderer = new THREE.WebGLRenderer();
@@ -79,31 +81,7 @@ function init() {
     */
 }
 
-function loadAsset(url) {
-    try {
-        loadAsset1(url);
-    } catch (error) {
-        console.error('Error loading VRML using method 1:', url, error);
-
-        try {
-            loadAsset2(url);
-        } catch (error) {
-            console.error('Error loading VRML using method 2:', url, error);                    
-        }
-    }
-}
-
-function loadAsset1(url) {
-    const loader = new VRMLLoader();
-
-    loader.load(url, function (object) {
-        vrmlScene = object;
-        scene.add(object);
-        controls.reset();
-    });
-}
-
-async function loadAsset2(url) {
+async function loadAsset0(url) {
     const response = await fetch(url);
     const arrayBuffer = await response.arrayBuffer();
     const uint8Array = new Uint8Array(arrayBuffer);
@@ -138,6 +116,16 @@ async function loadAsset2(url) {
 
     camera.position.set(0, 0, 80);
     camera.lookAt(0, 0, 0);
+}
+
+function loadAsset1(url) {
+    const loader = new VRMLLoader();
+
+    loader.load(url, function (object) {
+        vrmlScene = object;
+        scene.add(object);
+        controls.reset();
+    });
 }
 
 function onWindowResize() {
