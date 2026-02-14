@@ -9,24 +9,70 @@ let isUserInteracting = false,
     lat = 0, onPointerDownLat = 0,
     phi = 0, theta = 0;
 
-export function init(url) {
+export function init(url, mode = 0) {
     const container = document.body;
 
     camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 1, 1100);
 
     scene = new THREE.Scene();
 
-    const geometry = new THREE.SphereGeometry(500, 60, 40);
-    // invert the geometry on the x-axis so that all of the faces point inward
-    geometry.scale(-1, 1, 1);
+    if (mode === 0) {
+        // Equirectangular
+        const geometry = new THREE.SphereGeometry(500, 60, 40);
+        geometry.scale(-1, 1, 1);
 
-    const texture = new THREE.TextureLoader().load(url);
-    texture.colorSpace = THREE.SRGBColorSpace;
-    const material = new THREE.MeshBasicMaterial({ map: texture });
+        const texture = new THREE.TextureLoader().load(url);
+        texture.colorSpace = THREE.SRGBColorSpace;
+        const material = new THREE.MeshBasicMaterial({ map: texture });
 
-    const mesh = new THREE.Mesh(geometry, material);
+        const mesh = new THREE.Mesh(geometry, material);
+        scene.add(mesh);
+    } else {
+        // Cubemap (Single Image Atlas)
+        // This assumes the image is a 3x2 grid of cube faces.
+        // The standard 3x2 layout is:
+        // px, nx, py, 
+        // ny, pz, nz
+        // Each face is 1/3 width and 1/2 height.
+        const geometry = new THREE.BoxGeometry(100, 100, 100);
+        geometry.scale(1, 1, -1); // Invert box
 
-    scene.add(mesh);
+        const textures = [];
+        const texture = new THREE.TextureLoader().load(url);
+        texture.colorSpace = THREE.SRGBColorSpace;
+
+        for (let i = 0; i < 6; i++) {
+            textures[i] = texture.clone();
+            textures[i].needsUpdate = true;
+        }
+
+        // px
+        textures[0].repeat.set(1 / 3, 1 / 2);
+        textures[0].offset.set(0, 1 / 2);
+        // nx
+        textures[1].repeat.set(1 / 3, 1 / 2);
+        textures[1].offset.set(1 / 3, 1 / 2);
+        // py
+        textures[2].repeat.set(1 / 3, 1 / 2);
+        textures[2].offset.set(2 / 3, 1 / 2);
+        // ny
+        textures[3].repeat.set(1 / 3, 1 / 2);
+        textures[3].offset.set(0, 0);
+        // pz
+        textures[4].repeat.set(1 / 3, 1 / 2);
+        textures[4].offset.set(1 / 3, 0);
+        // nz
+        textures[5].repeat.set(1 / 3, 1 / 2);
+        textures[5].offset.set(2 / 3, 0);
+
+        const materials = [];
+        for (let i = 0; i < 6; i++) {
+            materials.push(new THREE.MeshBasicMaterial({ map: textures[i] }));
+        }
+
+        const mesh = new THREE.Mesh(geometry, materials);
+        scene.add(mesh);
+    }
 
     renderer = new THREE.WebGLRenderer();
     renderer.setPixelRatio(window.devicePixelRatio);
