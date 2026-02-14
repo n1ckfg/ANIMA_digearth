@@ -1,131 +1,48 @@
 import * as THREE from 'three';
 import Stats from 'three/addons/libs/stats.module.js';
-import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
-import { VRMLLoader } from 'three/addons/loaders/VRMLLoader.js';
-import { GUI } from 'three/addons/libs/lil-gui.module.min.js';
 
-let camera, scene, renderer, stats, controls, loader;
+let camera, scene, renderer, stats;
 
-/*
-const params = {
-    asset: 'house'
-};
-const assets = [
-    'creaseAngle',
-    'crystal',
-    'house',
-    'elevationGrid1',
-    'elevationGrid2',
-    'extrusion1',
-    'extrusion2',
-    'extrusion3',
-    'lines',
-    'linesTransparent',
-    'meshWithLines',
-    'meshWithTexture',
-    'pixelTexture',
-    'points',
-];
-*/
+let isUserInteracting = false,
+    onPointerDownMouseX = 0, onPointerDownMouseY = 0,
+    lon = 0, onPointerDownLon = 0,
+    lat = 0, onPointerDownLat = 0,
+    phi = 0, theta = 0;
 
-let vrmlScene;
+export function init(url) {
+    const container = document.body;
 
-export function init(url, mode) {
-    camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 1e10);
-    camera.position.set(- 10, 5, 10);
+    camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 1, 1100);
+
     scene = new THREE.Scene();
-    scene.add(camera);
-    // light
-    const ambientLight = new THREE.AmbientLight(0xffffff, 1.2);
-    scene.add(ambientLight);
-    const dirLight = new THREE.DirectionalLight(0xffffff, 2.0);
-    dirLight.position.set(200, 200, 200);
-    scene.add(dirLight);
-    
-    if (mode == 0) {
-        loadAsset0(url);
-    } else {
-        loadAsset1(url);
-    }
-    
-    // renderer
+
+    const geometry = new THREE.SphereGeometry(500, 60, 40);
+    // invert the geometry on the x-axis so that all of the faces point inward
+    geometry.scale(-1, 1, 1);
+
+    const texture = new THREE.TextureLoader().load(url);
+    texture.colorSpace = THREE.SRGBColorSpace;
+    const material = new THREE.MeshBasicMaterial({ map: texture });
+
+    const mesh = new THREE.Mesh(geometry, material);
+
+    scene.add(mesh);
+
     renderer = new THREE.WebGLRenderer();
     renderer.setPixelRatio(window.devicePixelRatio);
     renderer.setSize(window.innerWidth, window.innerHeight);
     renderer.setAnimationLoop(animate);
-    document.body.appendChild(renderer.domElement);
-    // controls
-    controls = new OrbitControls(camera, renderer.domElement);
-    controls.minDistance = 1;
-    controls.maxDistance = 200;
-    controls.enableDamping = true;
-    //
+    container.appendChild(renderer.domElement);
+
     stats = new Stats();
-    document.body.appendChild(stats.dom);
-    //
+    container.appendChild(stats.dom);
+
+    container.style.touchAction = 'none';
+    container.addEventListener('pointerdown', onPointerDown);
+
+    document.addEventListener('wheel', onDocumentMouseWheel);
+
     window.addEventListener('resize', onWindowResize);
-    //
-    /*
-    const gui = new GUI();
-    gui.add(params, 'asset', assets).onChange(function (value) {
-        if (vrmlScene) {
-            vrmlScene.traverse(function (object) {
-                if (object.material) object.material.dispose();
-                if (object.material && object.material.map) object.material.map.dispose();
-                if (object.geometry) object.geometry.dispose();
-            });
-            scene.remove(vrmlScene);
-        }
-        loadAsset(value);
-    });
-    */
-}
-
-async function loadAsset0(url) {
-    const response = await fetch(url);
-    const arrayBuffer = await response.arrayBuffer();
-    const uint8Array = new Uint8Array(arrayBuffer);
-
-    let vrmlText;
-
-    // Check if zip compressed (magic bytes 0x1f 0x8b) and decompress with pako
-    if (uint8Array[0] === 0x1f && uint8Array[1] === 0x8b) {
-        const decompressed = pako.inflate(uint8Array);
-        vrmlText = new TextDecoder().decode(decompressed);
-    } else {
-        vrmlText = new TextDecoder().decode(uint8Array);
-    }
-
-    const loader = new VRMLLoader();
-    const vrmlScene = loader.parse(vrmlText);
-
-    const box = new THREE.Box3().setFromObject(vrmlScene);
-    const center = box.getCenter(new THREE.Vector3());
-    const size = box.getSize(new THREE.Vector3());
-
-    vrmlScene.position.sub(center);
-
-    const maxDim = Math.max(size.x, size.y, size.z);
-
-    if (maxDim > 0) {
-        const scale = 50 / maxDim;
-        vrmlScene.scale.multiplyScalar(scale);
-    }
-
-    scene.add(vrmlScene);
-
-    camera.position.set(0, 0, 80);
-    camera.lookAt(0, 0, 0);
-}
-
-function loadAsset1(url) {
-    const loader = new VRMLLoader();
-
-    loader.load(url, function (object) {
-        vrmlScene = object;
-        scene.add(object);
-        controls.reset();
-    });
 }
 
 function onWindowResize() {
@@ -134,8 +51,58 @@ function onWindowResize() {
     renderer.setSize(window.innerWidth, window.innerHeight);
 }
 
+function onPointerDown(event) {
+    if (event.isPrimary === false) return;
+
+    isUserInteracting = true;
+
+    onPointerDownMouseX = event.clientX;
+    onPointerDownMouseY = event.clientY;
+
+    onPointerDownLon = lon;
+    onPointerDownLat = lat;
+
+    document.addEventListener('pointermove', onPointerMove);
+    document.addEventListener('pointerup', onPointerUp);
+}
+
+function onPointerMove(event) {
+    if (event.isPrimary === false) return;
+
+    lon = (onPointerDownMouseX - event.clientX) * 0.1 + onPointerDownLon;
+    lat = (event.clientY - onPointerDownMouseY) * 0.1 + onPointerDownLat;
+}
+
+function onPointerUp(event) {
+    if (event.isPrimary === false) return;
+
+    isUserInteracting = false;
+
+    document.removeEventListener('pointermove', onPointerMove);
+    document.removeEventListener('pointerup', onPointerUp);
+}
+
+function onDocumentMouseWheel(event) {
+    const fov = camera.fov + event.deltaY * 0.05;
+    camera.fov = THREE.MathUtils.clamp(fov, 10, 75);
+    camera.updateProjectionMatrix();
+}
+
 function animate() {
-    controls.update(); // to support damping
+    if (isUserInteracting === false) {
+        lon += 0.1;
+    }
+
+    lat = Math.max(-85, Math.min(85, lat));
+    phi = THREE.MathUtils.degToRad(90 - lat);
+    theta = THREE.MathUtils.degToRad(lon);
+
+    const x = 500 * Math.sin(phi) * Math.cos(theta);
+    const y = 500 * Math.cos(phi);
+    const z = 500 * Math.sin(phi) * Math.sin(theta);
+
+    camera.lookAt(x, y, z);
+
     renderer.render(scene, camera);
     stats.update();
 }
