@@ -22,7 +22,7 @@ export function init(url, mode = 0) {
 
         const mesh = new THREE.Mesh(geometry, material);
         scene.add(mesh);
-    } else {
+    } else if (mode === 1) {
         // Cubemap (from horizontal strip atlas)
         camera = new THREE.PerspectiveCamera(90, window.innerWidth / window.innerHeight, 0.1, 100);
         camera.position.z = 0.01;
@@ -40,6 +40,27 @@ export function init(url, mode = 0) {
         );
         skyBox.geometry.scale(1, 1, -1);
         scene.add(skyBox);
+    } else {
+        // Cylindrical projection (QTVR-style panoramic strip)
+        camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+        camera.position.z = 0.01;
+
+        const radius = 10;
+        const texture = new THREE.TextureLoader().load(url, (tex) => {
+            const texWidth = tex.image.width;
+            const texHeight = tex.image.height;
+            const height = (texHeight / texWidth) * (2 * Math.PI * radius);
+            cylinder.scale.y = height;
+        });
+        texture.colorSpace = THREE.SRGBColorSpace;
+
+        const geometry = new THREE.CylinderGeometry(radius, radius, 1, 60, 1, true);
+        geometry.scale(-1, 1, 1);
+
+        const material = new THREE.MeshBasicMaterial({ map: texture });
+
+        const cylinder = new THREE.Mesh(geometry, material);
+        scene.add(cylinder);
     }
 
     renderer = new THREE.WebGLRenderer();
