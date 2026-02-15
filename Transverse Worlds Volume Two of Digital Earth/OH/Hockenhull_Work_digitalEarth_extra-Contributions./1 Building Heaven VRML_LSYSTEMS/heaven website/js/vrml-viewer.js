@@ -81,6 +81,40 @@ export function init(url, mode) {
     */
 }
 
+function preprocessVRML(text) {
+    // Remove eventIn/eventOut declarations (Script node fields unsupported by VRMLLoader)
+    text = text.replace(/^(eventIn|eventOut)\s+.*$/gm, '');
+
+    // Replace hyphens in DEF/USE/ROUTE identifiers (unsupported by VRMLLoader lexer)
+    text = text.replace(/\bDEF\s+(\S+)/g, (m, n) => 'DEF ' + n.replace(/-/g, '_'));
+    text = text.replace(/\bUSE\s+(\S+)/g, (m, n) => 'USE ' + n.replace(/-/g, '_'));
+    text = text.replace(/\bROUTE\s+(\S+)\s+TO\s+(\S+)/g, (m, f, t) =>
+        'ROUTE ' + f.replace(/-/g, '_') + ' TO ' + t.replace(/-/g, '_'));
+
+    // Strip interpolator nodes whose names collide with shorter NodeName tokens
+    // in the VRMLLoader regex (Color vs ColorInterpolator, etc.)
+    for (const nodeType of ['ColorInterpolator', 'CoordinateInterpolator', 'NormalInterpolator']) {
+        const re = new RegExp('(DEF\\s+\\S+\\s+)?' + nodeType + '\\s*\\{', 'g');
+        let match;
+        const ranges = [];
+        while ((match = re.exec(text)) !== null) {
+            let depth = 0;
+            for (let i = match.index; i < text.length; i++) {
+                if (text[i] === '{') depth++;
+                else if (text[i] === '}') {
+                    depth--;
+                    if (depth === 0) { ranges.push([match.index, i + 1]); break; }
+                }
+            }
+        }
+        for (let i = ranges.length - 1; i >= 0; i--) {
+            text = text.slice(0, ranges[i][0]) + text.slice(ranges[i][1]);
+        }
+    }
+
+    return text;
+}
+
 async function loadAsset0(url) {
     const response = await fetch(url);
     const arrayBuffer = await response.arrayBuffer();
@@ -95,6 +129,8 @@ async function loadAsset0(url) {
     } else {
         vrmlText = new TextDecoder().decode(uint8Array);
     }
+
+    vrmlText = preprocessVRML(vrmlText);
 
     const loader = new VRMLLoader();
     const vrmlScene = loader.parse(vrmlText);
