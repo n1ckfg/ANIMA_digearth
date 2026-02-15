@@ -103,14 +103,11 @@ async function loadAsset0(url) {
     const center = box.getCenter(new THREE.Vector3());
     const size = box.getSize(new THREE.Vector3());
 
-    vrmlScene.position.sub(center);
-
     const maxDim = Math.max(size.x, size.y, size.z);
+    const scale = maxDim > 0 ? 50 / maxDim : 1;
 
-    if (maxDim > 0) {
-        const scale = 50 / maxDim;
-        vrmlScene.scale.multiplyScalar(scale);
-    }
+    vrmlScene.scale.multiplyScalar(scale);
+    vrmlScene.position.sub(center).multiplyScalar(scale);
 
     scene.add(vrmlScene);
 
