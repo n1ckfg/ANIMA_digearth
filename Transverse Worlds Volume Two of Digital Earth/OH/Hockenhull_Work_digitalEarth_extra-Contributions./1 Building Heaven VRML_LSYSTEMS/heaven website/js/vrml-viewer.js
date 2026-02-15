@@ -161,6 +161,19 @@ function preprocessVRML(text) {
             text = text.slice(0, ranges[i][0]) + text.slice(ranges[i][1]);
         }
         for (const name of protoNames) {
+            // In geometry fields, strip field + block (Group is not valid geometry)
+            const geomRe = new RegExp('\\bgeometry\\s+' + name + '\\s*\\{', 'g');
+            let gm;
+            const geomRanges = [];
+            while ((gm = geomRe.exec(text)) !== null) {
+                const braceStart = text.indexOf('{', gm.index);
+                const braceEnd = findClose(text, braceStart, '{', '}');
+                if (braceEnd !== -1) geomRanges.push([gm.index, braceEnd + 1]);
+            }
+            for (let i = geomRanges.length - 1; i >= 0; i--) {
+                text = text.slice(0, geomRanges[i][0]) + text.slice(geomRanges[i][1]);
+            }
+            // Elsewhere (e.g. children), replace with Group
             text = text.replace(new RegExp('\\b' + name + '\\s*\\{', 'g'), 'Group {');
         }
     }
