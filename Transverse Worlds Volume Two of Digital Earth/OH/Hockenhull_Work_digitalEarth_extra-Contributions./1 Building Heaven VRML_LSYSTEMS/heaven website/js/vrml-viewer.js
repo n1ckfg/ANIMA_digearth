@@ -83,34 +83,95 @@ export function init(url, mode) {
 }
 
 function preprocessVRML(text) {
-    // Remove eventIn/eventOut declarations (Script node fields unsupported by VRMLLoader)
-    text = text.replace(/^(eventIn|eventOut)\s+.*$/gm, '');
+    // Collapse multiline strings into single lines
+    // (VRMLLoader StringLiteral regex does not support newlines)
+    {
+        let result = '';
+        let inString = false;
+        for (let i = 0; i < text.length; i++) {
+            if (text[i] === '"' && (i === 0 || text[i - 1] !== '\\')) {
+                inString = !inString;
+                result += text[i];
+            } else if (inString && (text[i] === '\n' || text[i] === '\r')) {
+                result += ' ';
+            } else {
+                result += text[i];
+            }
+        }
+        text = result;
+    }
 
-    // Replace hyphens in DEF/USE/ROUTE identifiers (unsupported by VRMLLoader lexer)
+    // Remove eventIn/eventOut/field declarations (Script/PROTO fields)
+    text = text.replace(/^\s*(eventIn|eventOut|field)\s+.*$/gm, '');
+
+    // Remove ROUTE lines (no-ops in VRMLLoader; avoids NodeName.event lexer conflicts)
+    text = text.replace(/^\s*ROUTE\s+.*$/gm, '');
+
+    // Replace hyphens in DEF/USE identifiers (unsupported by VRMLLoader lexer)
     text = text.replace(/\bDEF\s+(\S+)/g, (m, n) => 'DEF ' + n.replace(/-/g, '_'));
     text = text.replace(/\bUSE\s+(\S+)/g, (m, n) => 'USE ' + n.replace(/-/g, '_'));
-    text = text.replace(/\bROUTE\s+(\S+)\s+TO\s+(\S+)/g, (m, f, t) =>
-        'ROUTE ' + f.replace(/-/g, '_') + ' TO ' + t.replace(/-/g, '_'));
 
-    // Strip interpolator nodes whose names collide with shorter NodeName tokens
-    // in the VRMLLoader regex (Color vs ColorInterpolator, etc.)
-    for (const nodeType of ['ColorInterpolator', 'CoordinateInterpolator', 'NormalInterpolator']) {
+    // Find matching close brace/bracket, skipping quoted strings
+    function findClose(text, start, open, close) {
+        let depth = 0, inStr = false;
+        for (let i = start; i < text.length; i++) {
+            if (text[i] === '"' && (i === 0 || text[i - 1] !== '\\')) inStr = !inStr;
+            if (!inStr) {
+                if (text[i] === open) depth++;
+                else if (text[i] === close) { depth--; if (depth === 0) return i; }
+            }
+        }
+        return -1;
+    }
+
+    // Strip node blocks by type name (handles optional DEF prefix)
+    function stripBlocks(text, nodeType) {
         const re = new RegExp('(DEF\\s+\\S+\\s+)?' + nodeType + '\\s*\\{', 'g');
         let match;
         const ranges = [];
         while ((match = re.exec(text)) !== null) {
-            let depth = 0;
-            for (let i = match.index; i < text.length; i++) {
-                if (text[i] === '{') depth++;
-                else if (text[i] === '}') {
-                    depth--;
-                    if (depth === 0) { ranges.push([match.index, i + 1]); break; }
-                }
-            }
+            const braceStart = text.indexOf('{', match.index + (match[1] || '').length);
+            const braceEnd = findClose(text, braceStart, '{', '}');
+            if (braceEnd === -1) continue;
+            ranges.push([match.index, braceEnd + 1]);
         }
         for (let i = ranges.length - 1; i >= 0; i--) {
             text = text.slice(0, ranges[i][0]) + text.slice(ranges[i][1]);
         }
+        return text;
+    }
+
+    // Strip PROTO definitions; replace instances with Group
+    {
+        const re = /\bPROTO\s+(\w+)\s*\[/g;
+        let match;
+        const ranges = [];
+        const protoNames = [];
+        while ((match = re.exec(text)) !== null) {
+            protoNames.push(match[1]);
+            const bracketEnd = findClose(text, match.index + match[0].length - 1, '[', ']');
+            if (bracketEnd === -1) continue;
+            const bodyStart = text.indexOf('{', bracketEnd + 1);
+            if (bodyStart === -1) continue;
+            const bodyEnd = findClose(text, bodyStart, '{', '}');
+            if (bodyEnd === -1) continue;
+            ranges.push([match.index, bodyEnd + 1]);
+        }
+        for (let i = ranges.length - 1; i >= 0; i--) {
+            text = text.slice(0, ranges[i][0]) + text.slice(ranges[i][1]);
+        }
+        for (const name of protoNames) {
+            text = text.replace(new RegExp('\\b' + name + '\\s*\\{', 'g'), 'Group {');
+        }
+    }
+
+    // Strip Script blocks
+    text = stripBlocks(text, 'Script');
+
+    // Strip interpolator nodes with NodeName regex prefix conflicts
+    // (Color vs ColorInterpolator, Coordinate vs CoordinateInterpolator, etc.)
+    for (const nodeType of ['ColorInterpolator', 'CoordinateInterpolator', 'NormalInterpolator']) {
+        text = stripBlocks(text, nodeType);
     }
 
     return text;
