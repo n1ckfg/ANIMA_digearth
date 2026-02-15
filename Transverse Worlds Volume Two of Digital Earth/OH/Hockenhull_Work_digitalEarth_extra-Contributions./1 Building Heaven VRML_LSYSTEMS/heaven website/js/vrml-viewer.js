@@ -61,6 +61,7 @@ export function init(url, mode) {
     controls.enableDamping = true;
     //
     stats = new Stats();
+    stats.dom.style.display = 'none';
     document.body.appendChild(stats.dom);
     //
     window.addEventListener('resize', onWindowResize);
