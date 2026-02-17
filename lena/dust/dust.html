@@ -6,81 +6,61 @@
 
 
 
-<script language=JavaScript>
-        
-        function playLooks()
-                	{
-                	document.looks.play(false, "dn-looks.wav");
-                	}
-        function playCorn()
-			{
-			document.corn.play(false, "dn-corn.wav");
-			}
-        function playPict()
-                	{
-                	document.pict.play(false, "dn-pict.wav");
-                	}
-        function playMovie()
-			{
-			document.movie.play(false, "dn-movie.wav");
-			}
-        function playDeath()
-                	{
-                	document.death.play(false, "dn-death.wav");
-                	}
-        function playUnder()
-			{
-			document.under.play(false, "d-under.wav");
-			}
-        function playLayer()
-                	{
-                	document.layer.play(false, "d-layer.wav");
-                	}
-        function playSlight()
-			{
-			document.slight.play(false, "d-slight.wav");
-			}
-        function playIsthat()
-                	{
-                	document.isthat.play(false, "d-isthat.wav");
-                	}
-        function playPound()
-			{
-			document.pound.play(false, "d-pound.wav");
-			}
-        function playFaint()
-                	{
-                	document.faint.play(false, "d-faint.wav");
-                	}
-        function playHan()
-			{
-			document.han.play(false, "d-han.wav");
-			}
-        function playMedusa()
-                	{
-                	document.medusa.play(false, "d-medusa.wav");
-                	}
-        function playDoi()
-			{
-			document.doi.play(false, "d-doi.wav");
-			}
-        function playSeeing()
-                	{
-                	document.seeing.play(false, "d-seeing.wav");
-                	}
-        function playDis()
-			{
-			document.dis.play(false, "d-dis.wav");
-			}
-        function playWatch()
-                	{
-                	document.watch.play(false, "d-watch.wav");
-                	}
-        function playGrainy()
-			{
-			document.grainy.play(false, "d-grainy.wav");
-			}
+<script>
+// HTML5 Audio - modernized from 1990s Netscape LiveAudio
 
+const sounds = {};
+
+function preload(name, file) {
+    sounds[name] = new Audio(file);
+}
+
+// Preload all sounds
+preload("looks", "dn-looks.wav");
+preload("corn", "dn-corn.wav");
+preload("pict", "dn-pict.wav");
+preload("movie", "dn-movie.wav");
+preload("death", "dn-death.wav");
+preload("under", "d-under.wav");
+preload("layer", "d-layer.wav");
+preload("slight", "d-slight.wav");
+preload("isthat", "d-isthat.wav");
+preload("pound", "d-pound.wav");
+preload("faint", "d-faint.wav");
+preload("han", "d-han.wav");
+preload("medusa", "d-medusa.wav");
+preload("doi", "d-doi.wav");
+preload("seeing", "d-seeing.wav");
+preload("dis", "d-dis.wav");
+preload("watch", "d-watch.wav");
+preload("grainy", "d-grainy.wav");
+
+function playSound(name) {
+    if (sounds[name]) {
+        sounds[name].currentTime = 0;
+        sounds[name].play();
+    }
+}
+
+// Original function names preserved for HTML compatibility
+function playLooks() { playSound("looks"); }
+function playCorn() { playSound("corn"); }
+function playPict() { playSound("pict"); }
+function playMovie() { playSound("movie"); }
+function playDeath() { playSound("death"); }
+function playUnder() { playSound("under"); }
+function playLayer() { playSound("layer"); }
+function playSlight() { playSound("slight"); }
+function playIsthat() { playSound("isthat"); }
+function playPound() { playSound("pound"); }
+function playFaint() { playSound("faint"); }
+function playHan() { playSound("han"); }
+function playMedusa() { playSound("medusa"); }
+function playDoi() { playSound("doi"); }
+function playSeeing() { playSound("seeing"); }
+function playDis() { playSound("dis"); }
+function playWatch() { playSound("watch"); }
+function playGrainy() { playSound("grainy"); }
 
 </script>
 
@@ -91,26 +71,7 @@
 <body bgcolor="#ffffff" text="#000000" link="#000000" alink="#ffffff" vlink="#000000" border=0>
 
 
-<embed src="../media/stub.wav" name="begin" hidden=true autostart=true  mastersound>
-
-<embed src="../media/stub.wav" name="looks" hidden=true autostart=false  mastersound>
-<embed src="../media/stub.wav" name="corn" hidden=true autostart=false  mastersound>
-<embed src="../media/stub.wav" name="pict" hidden=true autostart=false  mastersound>
-<embed src="../media/stub.wav" name="movie" hidden=true autostart=false  mastersound>
-<embed src="../media/stub.wav" name="death" hidden=true autostart=false  mastersound>
-<embed src="../media/stub.wav" name="under" hidden=true autostart=false  mastersound>
-<embed src="../media/stub.wav" name="layer" hidden=true autostart=false  mastersound>
-<embed src="../media/stub.wav" name="slight" hidden=true autostart=false  mastersound>
-<embed src="../media/stub.wav" name="isthat" hidden=true autostart=false  mastersound>
-<embed src="../media/stub.wav" name="pound" hidden=true autostart=false  mastersound>
-<embed src="../media/stub.wav" name="faint" hidden=true autostart=false  mastersound>
-<embed src="../media/stub.wav" name="han" hidden=true autostart=false  mastersound>
-<embed src="../media/stub.wav" name="medusa" hidden=true autostart=false  mastersound>
-<embed src="../media/stub.wav" name="doi" hidden=true autostart=false  mastersound>
-<embed src="../media/stub.wav" name="seeing" hidden=true autostart=false  mastersound>
-<embed src="../media/stub.wav" name="dis" hidden=true autostart=false  mastersound>
-<embed src="../media/stub.wav" name="watch" hidden=true autostart=false  mastersound>
-<embed src="../media/stub.wav" name="grainy" hidden=true autostart=false  mastersound>
+<!-- Original embed tags removed - using HTML5 Audio instead -->
 
 
 
@@ -152,7 +113,7 @@
 <br><br><br><br><br><br>
 <b><font size=2>
 
-<a href="http://www.eciad.bc.ca/~lolin" class="broken">Lena Olin</a> 1997<br><br>
+<!--<a href="http://www.eciad.bc.ca/~lolin" class="broken">--><a href="https://web.archive.org/web/19980629024841/http://www.eciad.bc.ca/~lolin/">Lena Olin</a> 1997<br><br>
 
 Music created and performed by Amie Stafford and Jordan Nobles.<br>
 Thanks to Andrew McCully. 

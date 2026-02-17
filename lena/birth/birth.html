@@ -4,61 +4,51 @@
 <link rel="stylesheet" href="../../css/main.css">
 
 
-<script language=JavaScript>
-        
-        function playReal()
-                	{
-                	document.real.play(false, "b-real.wav");
-                	}
-        function playPlug()
-			{
-			document.plug.play(false, "b-plug.wav");
-			}
-        function playClear()
-                	{
-                	document.clear.play(false, "b-clear.wav");
-                	}
-        function playWatch()
-			{
-			document.watch.play(false, "b-watch.wav");
-			}
-        function playGrew()
-                	{
-                	document.grew.play(false, "b-grew.wav");
-                	}
-        function playSaw()
-			{
-			document.saw.play(false, "b-saw.wav");
-			}
-        function playGrow()
-                	{
-                	document.grow.play(false, "b-grow.wav");
-                	}
-        function playLooks()
-			{
-			document.looks.play(false, "bn-looks.wav");
-			}
-        function playSlice()
-                	{
-                	document.slice.play(false, "bn-slice.wav");
-                	}
-        function playCreat()
-			{
-			document.creat.play(false, "bn-creat.wav");
-			}
-        function playKeeps()
-                	{
-                	document.keeps.play(false, "bn-keeps.wav");
-                	}
-        function playGest()
-			{
-			document.gest.play(false, "bn-gest.wav");
-			}
-        function playRepla()
-                	{
-                	document.repla.play(false, "bn-repla.wav");
-                	}
+<script>
+// HTML5 Audio - modernized from 1990s Netscape LiveAudio
 
+const sounds = {};
+
+function preload(name, file) {
+    sounds[name] = new Audio(file);
+}
+
+// Preload all sounds
+preload("real", "b-real.wav");
+preload("plug", "b-plug.wav");
+preload("clear", "b-clear.wav");
+preload("watch", "b-watch.wav");
+preload("grew", "b-grew.wav");
+preload("saw", "b-saw.wav");
+preload("grow", "b-grow.wav");
+preload("looks", "bn-looks.wav");
+preload("slice", "bn-slice.wav");
+preload("creat", "bn-creat.wav");
+preload("keeps", "bn-keeps.wav");
+preload("gest", "bn-gest.wav");
+preload("repla", "bn-repla.wav");
+
+function playSound(name) {
+    if (sounds[name]) {
+        sounds[name].currentTime = 0;
+        sounds[name].play();
+    }
+}
+
+// Original function names preserved for HTML compatibility
+function playReal() { playSound("real"); }
+function playPlug() { playSound("plug"); }
+function playClear() { playSound("clear"); }
+function playWatch() { playSound("watch"); }
+function playGrew() { playSound("grew"); }
+function playSaw() { playSound("saw"); }
+function playGrow() { playSound("grow"); }
+function playLooks() { playSound("looks"); }
+function playSlice() { playSound("slice"); }
+function playCreat() { playSound("creat"); }
+function playKeeps() { playSound("keeps"); }
+function playGest() { playSound("gest"); }
+function playRepla() { playSound("repla"); }
 
 </script>
 
@@ -68,21 +58,7 @@
 <body bgcolor="#ffffff" text="#000000" link="#000000" alink="#ffffff" vlink="#000000" border=0>
 
 
-<embed src="../media/stub.wav" name="begin" hidden=true autostart=true  mastersound>
-
-<embed src="../media/stub.wav" name="real" hidden=true autostart=false  mastersound>
-<embed src="../media/stub.wav" name="plug" hidden=true autostart=false  mastersound>
-<embed src="../media/stub.wav" name="clear" hidden=true autostart=false  mastersound>
-<embed src="../media/stub.wav" name="watch" hidden=true autostart=false  mastersound>
-<embed src="../media/stub.wav" name="grew" hidden=true autostart=false  mastersound>
-<embed src="../media/stub.wav" name="saw" hidden=true autostart=false  mastersound>
-<embed src="../media/stub.wav" name="grow" hidden=true autostart=false  mastersound>
-<embed src="../media/stub.wav" name="looks" hidden=true autostart=false  mastersound>
-<embed src="../media/stub.wav" name="slice" hidden=true autostart=false  mastersound>
-<embed src="../media/stub.wav" name="creat" hidden=true autostart=false  mastersound>
-<embed src="../media/stub.wav" name="keeps" hidden=true autostart=false  mastersound>
-<embed src="../media/stub.wav" name="gest" hidden=true autostart=false  mastersound>
-<embed src="../media/stub.wav" name="repla" hidden=true autostart=false  mastersound>
+<!-- Original embed tags removed - using HTML5 Audio instead -->
 
 
 
@@ -127,7 +103,7 @@
 <br><br><br><br><br><br>
 <b><font size=2>
 
-<a href="http://www.eciad.bc.ca/~lolin" class="broken">Lena Olin</a> 1997<br><br>
+<!--<a href="http://www.eciad.bc.ca/~lolin" class="broken">--><a href="https://web.archive.org/web/19980629024841/http://www.eciad.bc.ca/~lolin/">Lena Olin</a> 1997<br><br>
 
 Music created and performed by Amie Stafford and Jordan Nobles.<br>
 Thanks to Andrew McCully and John Chaplain. 

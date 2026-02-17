@@ -5,60 +5,51 @@
 
 
 
-<script language=JavaScript>
-        
-        function playIcant()
-                	{
-                	document.icant.play(false, "m-icant.wav");
-                	}
-        function playIsaw()
-			{
-			document.isaw.play(false, "m-isaw.wav");
-			}
-        function playShot()
-                	{
-                	document.shot.play(false, "m-shot.wav");
-                	}
-        function playButnow()
-			{
-			document.butnow.play(false, "m-butnow.wav");
-			}
-        function playDidshe()
-                	{
-                	document.didshe.play(false, "m-didshe.wav");
-                	}
-        function playOrwas()
-			{
-			document.orwas.play(false, "m-orwas.wav");
-			}
-        function playThro()
-                	{
-                	document.thro.play(false, "m-thro.wav");
-                	}
-        function playElect()
-			{
-			document.elect.play(false, "m-elect.wav");
-			}
-        function playWatch()
-                	{
-                	document.watch.play(false, "mn-watch.wav");
-                	}
-        function playWho()
-			{
-			document.who.play(false, "mn-who.wav");
-			}
-        function playPixel()
-                	{
-                	document.pixel.play(false, "mn-pixel.wav");
-                	}
-        function playTube()
-			{
-			document.tube.play(false, "mn-tube.wav");
-			}
-        function playSubj()
-                	{
-                	document.subj.play(false, "mn-subj.wav");
-                	}
+<script>
+// HTML5 Audio - modernized from 1990s Netscape LiveAudio
+
+const sounds = {};
+
+function preload(name, file) {
+    sounds[name] = new Audio(file);
+}
+
+// Preload all sounds
+preload("icant", "m-icant.wav");
+preload("isaw", "m-isaw.wav");
+preload("shot", "m-shot.wav");
+preload("butnow", "m-butnow.wav");
+preload("didshe", "m-didshe.wav");
+preload("orwas", "m-orwas.wav");
+preload("thro", "m-thro.wav");
+preload("elect", "m-elect.wav");
+preload("watch", "mn-watch.wav");
+preload("who", "mn-who.wav");
+preload("pixel", "mn-pixel.wav");
+preload("tube", "mn-tube.wav");
+preload("subj", "mn-subj.wav");
+
+function playSound(name) {
+    if (sounds[name]) {
+        sounds[name].currentTime = 0;
+        sounds[name].play();
+    }
+}
+
+// Original function names preserved for HTML compatibility
+function playIcant() { playSound("icant"); }
+function playIsaw() { playSound("isaw"); }
+function playShot() { playSound("shot"); }
+function playButnow() { playSound("butnow"); }
+function playDidshe() { playSound("didshe"); }
+function playOrwas() { playSound("orwas"); }
+function playThro() { playSound("thro"); }
+function playElect() { playSound("elect"); }
+function playWatch() { playSound("watch"); }
+function playWho() { playSound("who"); }
+function playPixel() { playSound("pixel"); }
+function playTube() { playSound("tube"); }
+function playSubj() { playSound("subj"); }
 
 </script>
 
@@ -68,21 +59,7 @@
 <body bgcolor="#ffffff" text="#000000" link="#000000" alink="#ffffff" vlink="#000000" border=0>
 
 
-<embed src="stub.wav" name="begin" hidden=true autostart=true  mastersound>
-
-<embed src="stub.wav" name="icant" hidden=true autostart=false  mastersound>
-<embed src="stub.wav" name="isaw" hidden=true autostart=false  mastersound>
-<embed src="stub.wav" name="shot" hidden=true autostart=false  mastersound>
-<embed src="stub.wav" name="butnow" hidden=true autostart=false  mastersound>
-<embed src="stub.wav" name="didshe" hidden=true autostart=false  mastersound>
-<embed src="stub.wav" name="orwas" hidden=true autostart=false  mastersound>
-<embed src="stub.wav" name="thro" hidden=true autostart=false  mastersound>
-<embed src="stub.wav" name="elect" hidden=true autostart=false  mastersound>
-<embed src="stub.wav" name="watch" hidden=true autostart=false  mastersound>
-<embed src="stub.wav" name="who" hidden=true autostart=false  mastersound>
-<embed src="stub.wav" name="pixel" hidden=true autostart=false  mastersound>
-<embed src="stub.wav" name="tube" hidden=true autostart=false  mastersound>
-<embed src="stub.wav" name="subj" hidden=true autostart=false  mastersound>
+<!-- Original embed tags removed - using HTML5 Audio instead -->
 
 
 
@@ -120,7 +97,7 @@
 <br><br><br><br><br><br>
 <b><font size=2>
 
-<a href="http://www.eciad.bc.ca/~lolin" class="broken">Lena Olin</a> 1997<br><br>
+<!--<a href="http://www.eciad.bc.ca/~lolin" class="broken">--><a href="https://web.archive.org/web/19980629024841/http://www.eciad.bc.ca/~lolin/">Lena Olin</a> 1997<br><br>
 
 Music created and performed by Amie Stafford and Jordan Nobles.<br>
 Thanks to Andrew McCully. 

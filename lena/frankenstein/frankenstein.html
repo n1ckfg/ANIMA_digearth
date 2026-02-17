@@ -4,89 +4,65 @@
 <link rel="stylesheet" href="../../css/main.css">
 
 
-<script language=JavaScript>
-        
-        function playBlood()
-                	{
-                	document.blood.play(false, "f-blood.wav");
-                	}
-        function playShar()
-			{
-			document.shar.play(false, "fn-shar.wav");
-			}
-        function playWatch()
-                	{
-                	document.watch.play(false, "f-watch.wav");
-                	}
-        function playEach()
-			{
-			document.each.play(false, "f-each.wav");
-			}
-        function playRepl()
-                	{
-                	document.repl.play(false, "f-repl.wav");
-                	}
-        function playNowi()
-			{
-			document.nowi.play(false, "f-nowi.wav");
-			}
-        function playDog()
-                	{
-                	document.dog.play(false, "f-dog.wav");
-                	}
-        function playShehas()
-			{
-			document.shehas.play(false, "f-shehas.wav");
-			}
-        function playCrea()
-                	{
-                	document.crea.play(false, "f-crea.wav");
-                	}
-        function playContro()
-			{
-			document.contro.play(false, "f-contro.wav");
-			}
-        function playTobe()
-                	{
-                	document.tobe.play(false, "f-tobe.wav");
-                	}
-        function playWorms()
-			{
-			document.worms.play(false, "f-worms.wav");
-			}
-        function playFunny()
-                	{
-                	document.funny.play(false, "fn-funny.wav");
-                	}
-        function playFirst()
-			{
-			document.first.play(false, "fn-first.wav");
-			}
-        function playNeed()
-                	{
-                	document.need.play(false, "fn-need.wav");
-                	}
-        function playOnly()
-			{
-			document.only.play(false, "fn-only.wav");
-			}
-        function playShiny()
-                	{
-                	document.shiny.play(false, "fn-shiny.wav");
-                	}
-        function playNwatch()
-			{
-			document.nwatch.play(false, "fn-watch.wav");
-			}
-        function playTrans()
-                	{
-                	document.trans.play(false, "fn-trans.wav");
-                	}
-        function playLook()
-			{
-			document.look.play(false, "fn-look.wav");
-			}
+<script>
+// HTML5 Audio - modernized from 1990s Netscape LiveAudio
 
+const sounds = {};
+
+function preload(name, file) {
+    sounds[name] = new Audio(file);
+}
+
+// Preload all sounds
+preload("blood", "f-blood.wav");
+preload("shar", "fn-shar.wav");
+preload("watch", "f-watch.wav");
+preload("each", "f-each.wav");
+preload("repl", "f-repl.wav");
+preload("nowi", "f-nowi.wav");
+preload("dog", "f-dog.wav");
+preload("shehas", "f-shehas.wav");
+preload("crea", "f-crea.wav");
+preload("contro", "f-contro.wav");
+preload("tobe", "f-tobe.wav");
+preload("worms", "f-worms.wav");
+preload("funny", "fn-funny.wav");
+preload("first", "fn-first.wav");
+preload("need", "fn-need.wav");
+preload("only", "fn-only.wav");
+preload("shiny", "fn-shiny.wav");
+preload("nwatch", "fn-watch.wav");
+preload("trans", "fn-trans.wav");
+preload("look", "fn-look.wav");
+
+function playSound(name) {
+    if (sounds[name]) {
+        sounds[name].currentTime = 0;
+        sounds[name].play();
+    }
+}
+
+// Original function names preserved for HTML compatibility
+function playBlood() { playSound("blood"); }
+function playShar() { playSound("shar"); }
+function playWatch() { playSound("watch"); }
+function playEach() { playSound("each"); }
+function playRepl() { playSound("repl"); }
+function playNowi() { playSound("nowi"); }
+function playDog() { playSound("dog"); }
+function playShehas() { playSound("shehas"); }
+function playCrea() { playSound("crea"); }
+function playContro() { playSound("contro"); }
+function playTobe() { playSound("tobe"); }
+function playWorms() { playSound("worms"); }
+function playFunny() { playSound("funny"); }
+function playFirst() { playSound("first"); }
+function playNeed() { playSound("need"); }
+function playOnly() { playSound("only"); }
+function playShiny() { playSound("shiny"); }
+function playNwatch() { playSound("nwatch"); }
+function playTrans() { playSound("trans"); }
+function playLook() { playSound("look"); }
 
 </script>
 
@@ -96,28 +72,7 @@
 <body bgcolor="#ffffff" text="#000000" link="#000000" alink="#ffffff" vlink="#000000" border=0>
 
 
-<embed src="../media/stub.wav" name="begin" hidden=true autostart=true  mastersound>
-
-<embed src="../media/stub.wav" name="watch" hidden=true autostart=false  mastersound>
-<embed src="../media/stub.wav" name="each" hidden=true autostart=false  mastersound>
-<embed src="../media/stub.wav" name="repl" hidden=true autostart=false  mastersound>
-<embed src="../media/stub.wav" name="nowi" hidden=true autostart=false  mastersound>
-<embed src="../media/stub.wav" name="dog" hidden=true autostart=false  mastersound>
-<embed src="../media/stub.wav" name="blood" hidden=true autostart=false  mastersound>
-<embed src="../media/stub.wav" name="shehas" hidden=true autostart=false  mastersound>
-<embed src="../media/stub.wav" name="crea" hidden=true autostart=false  mastersound>
-<embed src="../media/stub.wav" name="contro" hidden=true autostart=false  mastersound>
-<embed src="../media/stub.wav" name="tobe" hidden=true autostart=false  mastersound>
-<embed src="../media/stub.wav" name="worms" hidden=true autostart=false  mastersound>
-<embed src="../media/stub.wav" name="funny" hidden=true autostart=false  mastersound>
-<embed src="../media/stub.wav" name="first" hidden=true autostart=false  mastersound>
-<embed src="../media/stub.wav" name="shar" hidden=true autostart=false  mastersound>
-<embed src="../media/stub.wav" name="need" hidden=true autostart=false  mastersound>
-<embed src="../media/stub.wav" name="only" hidden=true autostart=false  mastersound>
-<embed src="../media/stub.wav" name="shiny" hidden=true autostart=false  mastersound>
-<embed src="../media/stub.wav" name="nwatch" hidden=true autostart=false  mastersound>
-<embed src="../media/stub.wav" name="trans" hidden=true autostart=false  mastersound>
-<embed src="../media/stub.wav" name="look" hidden=true autostart=false  mastersound>
+<!-- Original embed tags removed - using HTML5 Audio instead -->
 
 
 
@@ -160,7 +115,7 @@
 <br><br><br><br><br><br>
 <b><font size=2>
 
-<a href="http://www.eciad.bc.ca/~lolin" class="broken">Lena Olin</a> 1997<br><br>
+<!--<a href="http://www.eciad.bc.ca/~lolin" class="broken">--><a href="https://web.archive.org/web/19980629024841/http://www.eciad.bc.ca/~lolin/">Lena Olin</a> 1997<br><br>
 
 Music created and performed by Amie Stafford and Jordan Nobles.<br>
 Thanks to Andrew McCully. 
