@@ -1,3 +1,10 @@
+/*
 .broken {
     color: red;
+}
+*/
+
+.broken {
+    color: gray;
+    text-decoration: line-through;
 }
