@@ -30,9 +30,14 @@ const assets = [
 
 let vrmlScene;
 
-export function init(url, mode) {
+export function init(url, mode, scaleMult = 1, camPos = null, camLookAt = null) {
     camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 1e10);
-    camera.position.set(- 10, 5, 10);
+    // Set camera position early (before controls)
+    if (camPos) {
+        camera.position.set(camPos[0], camPos[1], camPos[2]);
+    } else {
+        camera.position.set(0, 0, 80 * scaleMult);
+    }
     scene = new THREE.Scene();
     scene.add(camera);
     // light
@@ -41,9 +46,9 @@ export function init(url, mode) {
     const dirLight = new THREE.DirectionalLight(0xffffff, 2.0);
     dirLight.position.set(200, 200, 200);
     scene.add(dirLight);
-    
+
     if (mode == 0) {
-        loadAsset0(url);
+        loadAsset0(url, scaleMult);
     } else {
         loadAsset1(url);
     }
@@ -59,6 +64,16 @@ export function init(url, mode) {
     controls.minDistance = 1;
     controls.maxDistance = 200;
     controls.enableDamping = true;
+    if (camLookAt) {
+        controls.target.set(camLookAt[0], camLookAt[1], camLookAt[2]);
+    }
+    controls.update();
+    console.log('Initial camera pos:', [camera.position.x, camera.position.y, camera.position.z],
+                'target:', [controls.target.x, controls.target.y, controls.target.z]);
+    controls.addEventListener('change', () => {
+        console.log('Camera pos:', [camera.position.x.toFixed(1), camera.position.y.toFixed(1), camera.position.z.toFixed(1)].join(', '),
+                    'target:', [controls.target.x.toFixed(1), controls.target.y.toFixed(1), controls.target.z.toFixed(1)].join(', '));
+    });
     //
     stats = new Stats();
     stats.dom.style.display = 'none';
@@ -190,7 +205,7 @@ function preprocessVRML(text) {
     return text;
 }
 
-async function loadAsset0(url) {
+async function loadAsset0(url, scaleMult = 1) {
     const response = await fetch(url);
     const arrayBuffer = await response.arrayBuffer();
     const uint8Array = new Uint8Array(arrayBuffer);
@@ -215,15 +230,12 @@ async function loadAsset0(url) {
     const size = box.getSize(new THREE.Vector3());
 
     const maxDim = Math.max(size.x, size.y, size.z);
-    const scale = maxDim > 0 ? 50 / maxDim : 1;
+    const scale = (maxDim > 0 ? 50 / maxDim : 1) * scaleMult;
 
     vrmlScene.scale.multiplyScalar(scale);
     vrmlScene.position.sub(center).multiplyScalar(scale);
 
     scene.add(vrmlScene);
-
-    camera.position.set(0, 0, 80);
-    camera.lookAt(0, 0, 0);
 }
 
 function loadAsset1(url) {
